@@ -1,4 +1,5 @@
-﻿using Manticora.Models;
+﻿using Manticora.Data;
+using Manticora.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
@@ -25,7 +26,7 @@ namespace Manticora.Services
             if (_cache.TryGetValue(cacheKey, out Character characterDetails))
                 return characterDetails;
 
-            var apiUrl = $"{_configuration["Api:UrlRoot"]}/{id}";
+            var apiUrl = $"{_configuration["Api:UrlRoot"]}/character/{id}";
 
             var client = _clientFactory.CreateClient();
             var response = await client.GetStringAsync(apiUrl);
@@ -46,8 +47,18 @@ namespace Manticora.Services
             return character;
         }
 
-        public async Task<CharactersInfo> GetCharactersInfoAsync(string? name, int page = 1)
+        public async Task<CharactersInfo> GetCharactersInfoAsync(string? name, int page = 1, string? selected = null)
         {
+            List<int> selectedIds = new List<int>();
+            
+            if (!string.IsNullOrWhiteSpace(selected))
+                selectedIds = selected.Split(',').Select(int.Parse).ToList();
+
+            if (_cache.TryGetValue("selectedIds", out string selectedIdsCache))
+            {
+                if (selected != selectedIdsCache)
+                    _cache.Remove("characters");
+            }
             if (_cache.TryGetValue("name", out string nameCache))
             {
                 if (name != nameCache)
@@ -62,15 +73,18 @@ namespace Manticora.Services
             if (_cache.TryGetValue("characters", out CharactersInfo charactersInfo))
                 return charactersInfo;
 
-            var apiUrl = $"{_configuration["Api:UrlRoot"]}?page={page}";
+            var apiUrl = $"{_configuration["Api:UrlRoot"]}/character?page={page}";
             if (!string.IsNullOrWhiteSpace(name))
-                apiUrl = $"{_configuration["Api:UrlRoot"]}?name={name}&page={page}";
+                apiUrl = $"{_configuration["Api:UrlRoot"]}/character?name={name}&page={page}";
 
             var client = _clientFactory.CreateClient();
             var response = await client.GetFromJsonAsync<CharactersInfo>(apiUrl);
 
             charactersInfo = response ?? new CharactersInfo();
+            if (charactersInfo.Results != null && charactersInfo.Results.Any())
+                charactersInfo.Results.ForEach(r => r.Selected = selectedIds.Any(x => x == r.Id));
 
+            _cache.Set("selectedIds", selected, TimeSpan.FromMinutes(10));
             _cache.Set("name", name, TimeSpan.FromMinutes(10));
             _cache.Set("page", page, TimeSpan.FromMinutes(10));
             _cache.Set("characters", charactersInfo, TimeSpan.FromMinutes(10));

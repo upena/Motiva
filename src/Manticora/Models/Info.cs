@@ -7,5 +7,6 @@
         public string? Next { get; set; }
         public string? Prev { get; set; }
         public int CurrentPage { get; set; }
+        public string?  SelectedCharacters { get; set; }
     }
 }

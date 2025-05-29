@@ -399,3 +399,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/db/1 - Character count query.sql
+/src/Manticora/Data

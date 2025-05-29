@@ -4,9 +4,21 @@
 }
 
 <div class="container mt-4">
-    <h3>Personajes</h3>
+    <div class="row mb-lg-5">
+        <h3 class="col-md-10 float-start">Personajes</h3>
+        @if (!string.IsNullOrWhiteSpace(Model.Info.SelectedCharacters) && Model.Info.SelectedCharacters.Split(',').Length >= 2)
+        {
+            <a id="btnPlay" class="btn btn-dark btn-sm col-md-2 float-end" href="/Game/Start">Iniciar juego</a>
+        }
+        else
+        {
+            <a id="btnPlay" class="btn btn-dark btn-sm col-md-2 float-end" hidden href="/Game/Start">Iniciar juego</a>
+        }
+    </div>    
 
     <input type="hidden" asp-for="Info.CurrentPage" id="currentPage" />
+    <input type="hidden" asp-for="Info.SelectedCharacters" id="selectedCharactersDB" />
+
     <div class="container mt-4">
         <div class="input-group mb-3">
             <input type="search" class="form-control" placeholder="Nombre del personaje..." id="searchInput">
@@ -39,21 +51,3 @@
 </div>
 
 <script src="~/js/characters.js"></script>
-
-@* <h2>Seleccionar Personaje</h2>
-
-<form method="get">
-    <input type="text" name="name" placeholder="Buscar por nombre" />
-    <button type="submit">Buscar</button>
-</form>
-
-<div>
-    @foreach (var c in Model)
-    {
-        <div>
-            <img src="@c.ImageUrl" width="100" />
-            <strong>@c.Name</strong> - @c.Species
-            <a href="@Url.Action("Details", "Characters", new { id = c.Id })">Seleccionar</a>
-        </div>
-    }
-</div> *@

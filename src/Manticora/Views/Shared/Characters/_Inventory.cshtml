@@ -1,0 +1,11 @@
+﻿@model CharacterEquip
+
+<p>Oro disponible: <strong>@Model.Gold</strong></p>
+
+<h3>Inventario</h3>
+<ul>
+    @foreach (var item in Model.Inventory)
+    {
+        <li>@item.Weapon.Name - Alcance: @item.Weapon.Range - Disparos: @item.ShotsLeft</li>
+    }
+</ul>

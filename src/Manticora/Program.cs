@@ -1,4 +1,5 @@
 using Manticora.Data;
+using Manticora.Helpers;
 using Manticora.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddMemoryCache();
 builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddScoped<IListHelper, ListHelper>();
 
 var app = builder.Build();
 

@@ -2,29 +2,24 @@
 
 <div class="row">
     <div class="col-md-4">
-        <img src="@Model.ImageUrl" width="100" />
+        <img src="@Model.ImageUrl" width="150" />
     </div>
     <div class="col-md-8">
-        <div class="form-group row">
-            <div class="col">
-                <label>Nombre</label>
-                <input asp-for="Name" type="text" class="form-control" readonly>
-            </div>
-            <div class="col">
-                <label>Especie</label>
-                <input asp-for="Name" type="text" class="form-control" readonly>
-            </div>
+        <div class="form-group">
+            <label class="small text-secondary">Nombre:</label>
+            <h5 class="text-black">@Model.Name</h5>
         </div>
-
-        <div class="form-group row">
-            <div class="col">
-                <label>Tipo</label>
-                <input asp-for="Type" type="text" class="form-control" readonly>
-            </div>
-            <div class="col">
-                <label>Genero</label>
-                <input asp-for="Gender" type="text" class="form-control" readonly>
-            </div>
+        <div class="form-group">
+            <label class="small text-secondary">Especie:</label>
+            <h5 class="text-black">@Model.Species</h5>
+        </div>
+        <div class="form-group">
+            <label class="small text-secondary">Tipo:</label>
+            <h5 class="text-black">@Model.Type</h5>
+        </div>
+        <div class="form-group">
+            <label class="small text-secondary">Genero:</label>
+            <h5 class="text-black">@Model.Gender</h5>
         </div>
     </div>
 </div>

@@ -62,7 +62,14 @@
             {
                 <tr>
                     <td>
-                        <input type="checkbox" class="form-check-input">
+                        @if (character.Selected)
+                        {
+                            <input id=@string.Format("{0}_select", Model.Results.IndexOf(character)) type="checkbox" class="form-check-input" checked onchange=@string.Format("selectCharacter(this,{0});", @character.Id)>
+                        }
+                        else
+                        {
+                            <input id=@string.Format("{0}_select", Model.Results.IndexOf(character)) type="checkbox" class="form-check-input" onchange=@string.Format("selectCharacter(this,{0});", @character.Id)>
+                        }
                     </td>
                     <td>
                         @character.Name
@@ -74,7 +81,15 @@
                         @character.Gender
                     </td>
                     <td>
-                        <button class="btn btn-primary btn-sm align-content-center" onclick=@string.Format("getCharacterDetails({0});", character.Id)>Detalles</button>
+                        <button class="btn btn-primary btn-sm float-start col-md-5" onclick=@string.Format("getCharacterDetails({0});", character.Id)>Detalles</button>
+                        @if (character.Selected)
+                        {
+                            <button id=@string.Format("{0}_equipCharacter", Model.Results.IndexOf(character)) class="btn btn-secondary btn-sm float-end col-md-5" onclick=@string.Format("equipCharacter({0});", character.Id)>Equipar</button>
+                        }
+                        else
+                        {
+                            <button id=@string.Format("{0}_equipCharacter", Model.Results.IndexOf(character)) class="btn btn-secondary btn-sm float-end col-md-5" hidden onclick=@string.Format("equipCharacter({0});", character.Id)>Equipar</button>
+                        }
                     </td>
                 </tr>
             }

@@ -1,0 +1,24 @@
+﻿@model CharacterEquip
+
+@await Html.PartialAsync("~/Views/Shared/Characters/_CharacterDetails.cshtml", (Character)Model)
+
+<div id="inventoryDiv">
+    @await Html.PartialAsync("~/Views/Shared/Characters/_Inventory.cshtml", Model)
+</div>
+
+<h3>Tienda</h3>
+<table class="table table-bordered table-striped">
+    <tbody>
+        @foreach (var weapon in Model.Weapons)
+        {
+            <tr>
+                <td>
+                    <button class="btn btn-primary btn-sm" type="button" onclick=@string.Format("buy({0},{1})", Model.Id, weapon.Id)>Comprar</button>
+                </td>
+                <td>
+                    <p>@weapon.Name - Alcance: @weapon.Range - Precio: @weapon.Cost oros</p>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
