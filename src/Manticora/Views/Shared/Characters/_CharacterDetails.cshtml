@@ -1,0 +1,30 @@
+﻿@model Character
+
+<div class="row">
+    <div class="col-md-4">
+        <img src="@Model.ImageUrl" width="100" />
+    </div>
+    <div class="col-md-8">
+        <div class="form-group row">
+            <div class="col">
+                <label>Nombre</label>
+                <input asp-for="Name" type="text" class="form-control" readonly>
+            </div>
+            <div class="col">
+                <label>Especie</label>
+                <input asp-for="Name" type="text" class="form-control" readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                <label>Tipo</label>
+                <input asp-for="Type" type="text" class="form-control" readonly>
+            </div>
+            <div class="col">
+                <label>Genero</label>
+                <input asp-for="Gender" type="text" class="form-control" readonly>
+            </div>
+        </div>
+    </div>
+</div>

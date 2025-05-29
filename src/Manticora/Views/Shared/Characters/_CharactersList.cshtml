@@ -1,0 +1,83 @@
+﻿@model CharactersInfo
+
+<div class="row">
+    <label class="col justify-content-start fw-bold">@string.Format("{0} registros", Model.Info.Count)</label>
+    <nav class="col">
+        <ul class="pagination justify-content-end">
+            <li class="page-item @(Model.Info.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" onclick=@string.Format("searchCharacters({0});", Model.Info.CurrentPage - 1)>&laquo;</a>
+            </li>
+
+            <li class="page-item @(Model.Info.CurrentPage == 1 ? "active" : "")">
+                <a class="page-link" onclick="searchCharacters(1);">1</a>
+            </li>
+
+            @if (Model.Info.CurrentPage > 4)
+            {
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+            }
+
+            @for (int i = Model.Info.CurrentPage - 2; i <= Model.Info.CurrentPage + 2; i++)
+            {
+                if (i > 1 && i < Model.Info.Pages)
+                {
+                    <li class="page-item @(i == Model.Info.CurrentPage ? "active" : "")">
+                        <a class="page-link" onclick=@string.Format("searchCharacters({0});", i)>@i</a>
+                    </li>
+                }
+            }
+
+            @if (Model.Info.CurrentPage < Model.Info.Pages - 3)
+            {
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+            }
+
+            @if (Model.Info.Pages > 1)
+            {
+                <li class="page-item @(Model.Info.CurrentPage == Model.Info.Pages ? "active" : "")">
+                    <a class="page-link" onclick=@string.Format("searchCharacters({0});", Model.Info.Pages)>@Model.Info.Pages</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.Info.CurrentPage == Model.Info.Pages ? "disabled" : "")">
+                <a class="page-link" onclick=@string.Format("searchCharacters({0});", Model.Info.CurrentPage + 1)>&raquo;</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<table class="table table-bordered table-striped" id="characterTable">
+    <thead>
+        <tr>
+            <th>Seleccionar</th>
+            <th>Nombre</th>
+            <th>Especie</th>
+            <th>Genero</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+        @if (Model != null && Model.Results != null && Model.Results.Any())
+        {
+            foreach (var character in Model.Results)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" class="form-check-input">
+                    </td>
+                    <td>
+                        @character.Name
+                    </td>
+                    <td>
+                        @character.Species
+                    </td>
+                    <td>
+                        @character.Gender
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm align-content-center" onclick=@string.Format("getCharacterDetails({0});", character.Id)>Detalles</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

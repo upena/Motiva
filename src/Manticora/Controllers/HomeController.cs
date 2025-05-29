@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using Manticora.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace Manticora.Controllers
 {
@@ -13,13 +13,9 @@ namespace Manticora.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
 
-        public IActionResult Privacy()
-        {
+        public IActionResult Index()
+        {   
             return View();
         }
 

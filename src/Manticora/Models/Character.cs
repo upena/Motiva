@@ -9,6 +9,7 @@
         public string Gender { get; set; }
         public string ImageUrl { get; set; }
         public int Gold { get; set; } = 100;
+        public bool Selected { get; set; }
         public List<InventoryItem> Inventory { get; set; } = new();
         public int DamageDealt { get; set; } = 0;
     }

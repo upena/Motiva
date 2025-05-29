@@ -1,0 +1,59 @@
+﻿@model CharactersInfo
+@{
+    ViewData["Title"] = "Seleccionar Personaje";
+}
+
+<div class="container mt-4">
+    <h3>Personajes</h3>
+
+    <input type="hidden" asp-for="Info.CurrentPage" id="currentPage" />
+    <div class="container mt-4">
+        <div class="input-group mb-3">
+            <input type="search" class="form-control" placeholder="Nombre del personaje..." id="searchInput">
+            <button class="btn btn-outline-secondary" type="button" onclick="searchCharacters();">Buscar</button>
+        </div>
+    </div>
+
+    <div id="charactersDiv">
+        @await Html.PartialAsync("~/Views/Shared/Characters/_CharactersList.cshtml", Model)
+    </div>
+</div>
+
+<div class="modal fade" id="character-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Personaje</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="character-content" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/characters.js"></script>
+
+@* <h2>Seleccionar Personaje</h2>
+
+<form method="get">
+    <input type="text" name="name" placeholder="Buscar por nombre" />
+    <button type="submit">Buscar</button>
+</form>
+
+<div>
+    @foreach (var c in Model)
+    {
+        <div>
+            <img src="@c.ImageUrl" width="100" />
+            <strong>@c.Name</strong> - @c.Species
+            <a href="@Url.Action("Details", "Characters", new { id = c.Id })">Seleccionar</a>
+        </div>
+    }
+</div> *@
