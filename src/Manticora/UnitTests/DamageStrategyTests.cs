@@ -3,6 +3,7 @@ using Xunit;
 
 namespace Manticora.UnitTests
 {
+    //Menu Test --> Run all tests
     public class DamageStrategy : IDamageStrategy
     {
         public (int manticoreDamage, int cityDamage, string shotType) CalculateDamage(int weaponRange, int manticoreDistance)
