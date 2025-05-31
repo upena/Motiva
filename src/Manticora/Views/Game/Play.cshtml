@@ -1,0 +1,51 @@
+﻿@model GameState
+@{
+    ViewData["Title"] = "Juego en Progreso";
+    var log = (List<string>)ViewBag.Log;
+    bool gameOver = (bool)ViewBag.GameOver;
+}
+<form asp-action="EndGame">
+    <h2>Juego en Progreso</h2>
+
+    <h3>Atacante: @Model.Location.Name</h3>
+    <p>Tipo: @Model.Location.Type</p>
+    <p>Dimensión: @Model.Location.Dimension</p>
+    <p>Habitantes: @Model.Location.Residents</p>
+
+    <h3>Defensores</h3>
+    @foreach (var defender in Model.Defenders)
+    {
+        <p>@defender.Name - Daño causado: @defender.DamageDealt</p>
+    }
+
+    <h3>Estado del Juego</h3>
+    <p>Ciudad: @Model.CityHealth / 15</p>
+    <p>Mantícora: @Model.ManticoreHealth / 10</p>
+
+    <hr />
+    <h4>Eventos</h4>
+    @foreach (var item in log)
+    {
+        <pre>@item</pre>
+    }
+
+    @if (gameOver)
+    {
+        <hr />
+        <h2>Resumen Final</h2>
+        <p>Rondas: @Model.Round</p>
+        <p>Vida ciudad: @Model.CityHealth</p>
+        <p>Vida mantícora: @Model.ManticoreHealth</p>
+
+        @foreach (var d in Model.Defenders)
+        {
+            <p>Daño @d.Name: @d.DamageDealt</p>
+        }
+
+        <h3>
+            @(Model.ManticoreHealth <= 0 ? "¡La Mantícora fue derribada!" : "¡La ciudad fue destruida!")
+        </h3>
+
+        <input type="submit" value="Finalizar" class="btn btn-danger mt-4 mb-4" />
+    }
+</form>
